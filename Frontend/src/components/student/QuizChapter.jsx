@@ -30,8 +30,8 @@ function QuizChapter() {
     getData();
   }, [subject]);
 
-  const handleQuiz = () => {
-    navigate();
+  const handleQuiz = (title) => {
+    navigate(`/student/${stdid}/subject/${subject}/${title}/quiz`);
   };
 
   const handlePDF = () => {};
@@ -67,7 +67,7 @@ function QuizChapter() {
                 </td>
                 <td className="border border-gray-300 px-4 py-2">
                   <button
-                    onClick={handleQuiz}
+                    onClick={() => handleQuiz(name)}
                     className="text-blue-500 hover:underline"
                   >
                     Take Quiz

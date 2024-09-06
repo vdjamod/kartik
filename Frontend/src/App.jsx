@@ -29,6 +29,8 @@ import Chatbot from "./components/student/Chatbot";
 import Feedback from "./utils/Feedback";
 import Aboutus from "./utils/Aboutus";
 import QuizChapter from "./components/student/QuizChapter";
+import InputComponent from "./components/youtube/InputComponent";
+import VideoPlayer from "./components/youtube/VideoPlayer";
 
 function App() {
   return (
@@ -83,6 +85,11 @@ function App() {
           <Route path="/feedback" element={<Feedback />} />
           <Route path="/aboutus" element={<Aboutus />} />
           <Route path="*" element={<PageNotFound />} />
+
+
+          {/* youtube */}
+          <Route path="/student/:stdid/youtube" element={<InputComponent />} />
+          <Route path="/student/:stdid/youtube/video" element={<VideoPlayer />} />
         </Routes>
       </Router>
     </>

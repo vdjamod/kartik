@@ -7,6 +7,7 @@ export default defineConfig({
     proxy: {
       '/backend': 'https://sih-5.onrender.com',
       '/pdf': 'https://sih-2024-5.onrender.com',
+      '/api': 'http://localhost:3000',
     }
   },
   plugins: [react()],

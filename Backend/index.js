@@ -21,6 +21,8 @@ const chat = require('./Routes/question_answer')
 const dash = require('./Routes/student_dashboard')
 const bibtex = require('./Routes/get_letex')
 const analysis = require('./Routes/student_analysis')
+const youtubeRoutes = require('./Routes/youtube.routes')
+const growthRoutes = require('./Routes/growth.routes.js')
 
 
 app.use(cors());
@@ -40,6 +42,9 @@ app.use('/chat',chat);
 app.use('/dashboard',dash); 
 app.use('/bibtex',bibtex); 
 app.use('/analysis',analysis); 
+// Use routes
+app.use('/api/youtube', youtubeRoutes);
+app.use('/api/growth', growthRoutes);
 
 
 app.get('/',(req,res)=>{
