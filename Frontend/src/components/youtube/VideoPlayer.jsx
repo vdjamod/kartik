@@ -63,7 +63,7 @@ const VideoPlayer = () => {
         });
 
         console.log(response.data.gel_link);
-        setGeneratedLink(newLink);
+        setGeneratedLink(currentTime);
       } catch (error) {
         console.error("Error generating link:", error);
       }
@@ -74,6 +74,7 @@ const VideoPlayer = () => {
   const updateTimeInLink = (url, currentTime) => {
     const urlObj = new URL(url);
     urlObj.searchParams.set("t", `${currentTime}s`);
+    console.log("Video stopped at: ", currentTime);
     return urlObj.toString();
   };
 
@@ -104,7 +105,7 @@ const VideoPlayer = () => {
       <div id="player" />
       {generatedLink && (
         <div className="mt-4">
-          <h3 className="text-lg font-semibold">Generated Link:</h3>
+          <h3 className="text-lg font-semibold">Time:</h3>
           <div className="flex items-center space-x-2">
             <input
               type="text"
