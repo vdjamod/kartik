@@ -101,4 +101,5 @@ router.post("/get-subject-detail", async (req, res) => {
         });
     }
 });
+
 module.exports = router;

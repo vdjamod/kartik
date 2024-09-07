@@ -57,7 +57,13 @@ const QuizPage = () => {
 
   return (
     <div className="container mx-auto p-8">
-      <div className="bg-white p-6 rounded-lg shadow-lg">
+      <button
+        onClick={handleCancelQuiz}
+        className="mt-8 ml-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+      >
+        Button
+      </button>
+      {/* <div className="bg-white p-6 rounded-lg shadow-lg">
         <h1 className="text-3xl font-bold mb-4">Quiz: {chapter}</h1>
         {MCQ ? (
           <Quiz questions={MCQ} handleOptionChange={handleOptionChange} />
@@ -75,10 +81,10 @@ const QuizPage = () => {
           className="mt-8 ml-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
         >
           Cancel Quiz
-        </button>
+        </button> */}
 
-        {/* Display the marksheet after submission */}
-        {score && (
+      {/* Display the marksheet after submission */}
+      {/* {score && (
           <div className="mt-8">
             <h2 className="text-xl font-semibold">Marksheet</h2>
             <p>Total Questions: {score.totalQuestions}</p>
@@ -86,7 +92,7 @@ const QuizPage = () => {
             <p>Score Percentage: {score.percentage}%</p>
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

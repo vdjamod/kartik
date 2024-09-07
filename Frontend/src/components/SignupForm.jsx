@@ -27,7 +27,7 @@ const SignupForm = ({ onSignup }) => {
     }
 
     try {
-      const res = await axios.post("https://sih-5.onrender.com/user/signup", {
+      const res = await axios.post("/api/user/signup", {
         name,
         role,
         email,

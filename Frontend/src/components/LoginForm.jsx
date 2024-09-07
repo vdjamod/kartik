@@ -13,7 +13,7 @@ const LoginForm = ({ onLogin, role }) => {
     e.preventDefault();
 
     try {
-      const res = await axios.post('https://sih-5.onrender.com/user/login', {
+      const res = await axios.post('/api/user/login', {
         email,
         password
       });

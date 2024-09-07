@@ -24,7 +24,7 @@ const pdfSchema = new mongoose.Schema({
         type : String,
         required : true
     }
-})
+});
 
 const pdfModel = mongoose.model('pdf', pdfSchema);
 

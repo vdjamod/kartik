@@ -2,22 +2,29 @@
 
 import React from "react";
 import { Line } from "react-chartjs-2";
-import { Chart as ChartJS, LinearScale, CategoryScale } from 'chart.js';
-import { useEffect } from "react";
+import {
+  Chart as ChartJS,
+  LinearScale,
+  CategoryScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
 
-ChartJS.register(LinearScale, CategoryScale);
-
+// Register the necessary elements
+ChartJS.register(
+  LinearScale,
+  CategoryScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 function Dashboard() {
-  // // Sample data for the charts
-  // useEffect(() => {
-  //   const chartInstance = new Chart(ctx, { /* chart config */ });
-  
-  //   return () => {
-  //     chartInstance.destroy();
-  //   };
-  // }, []);
-  
   const videoLearningData = {
     labels: ["Day 1", "Day 2", "Day 3", "Day 4", "Day 5"],
     datasets: [

@@ -1,28 +1,32 @@
 // TitleLinkForm.js
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const StudentViewPdf = () => {
-  const [title, setTitle] = useState('');
-  const [link, setLink] = useState('');
-  const [error, setError] = useState('');
+  const [title, setTitle] = useState("");
+  const [link, setLink] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError(''); // Clear previous errors
+    setError(""); // Clear previous errors
 
     try {
       // Replace with your actual API endpoint
-      const response = await axios.post('https://sih-2024-5.onrender.com/pdf/get-files', {
-        title: title,
-      });
+      const response = await axios.post(
+        // "https://sih-2024-5.onrender.com/pdf/get-files",
+        "/api/pdf/get-files",
+        {
+          title: title,
+        }
+      );
 
       // console.log(response.data.path);
 
       // Assuming the API responds with an object that includes the link
       setLink(response.data.link);
     } catch (err) {
-      setError('Failed to fetch link. Please try again.');
+      setError("Failed to fetch link. Please try again.");
       console.error(err);
     }
   };
@@ -41,14 +45,22 @@ const StudentViewPdf = () => {
           className="p-2 border rounded"
           required
         />
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+        <button
+          type="submit"
+          className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+        >
           Get Link
         </button>
       </form>
       {link && (
         <div className="mt-4">
           <p className="text-green-600">Generated Link:</p>
-          <a href={link} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 underline"
+          >
             {link}
           </a>
         </div>

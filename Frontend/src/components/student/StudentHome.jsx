@@ -22,7 +22,8 @@ const StudentHomePage = () => {
     async function getData() {
       try {
         const res = await axios.get(
-          `https://sih-5.onrender.com/user/detail/${stdid}`
+          // `https://sih-5.onrender.com/user/detail/${stdid}`
+          `/api/user/detail/${stdid}`
         );
 
         console.log(res);

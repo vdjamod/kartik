@@ -27,21 +27,21 @@ const growthRoutes = require('./Routes/growth.routes.js')
 
 app.use(cors());
 
-app.use("/files", express.static("files"))
+app.use("/api/files", express.static("files"))
 app.use(bodyParser.json());
-app.use('/youtube',youtube_search);
-app.use('/video',video_description);
-app.use('/growth',video_growth);
-app.use('/',generate_pdf);
-app.use('/',mp4_to_text);
-app.use('/user',user); 
-app.use('/pdf',pdf);
-app.use('/backend',appp); 
-app.use('/mcq',mcq); 
-app.use('/chat',chat);
-app.use('/dashboard',dash); 
-app.use('/bibtex',bibtex); 
-app.use('/analysis',analysis); 
+app.use('/api/youtube',youtube_search);
+app.use('/api/video',video_description);
+app.use('/api/growth',video_growth);
+app.use('/api/',generate_pdf);
+app.use('/api/',mp4_to_text);
+app.use('/api/user',user); 
+app.use('/api/pdf',pdf);
+app.use('/api/backend',appp);
+app.use('/api/mcq',mcq); 
+app.use('/api/chat',chat);
+app.use('/api/dashboard',dash); 
+app.use('/api/bibtex',bibtex); 
+app.use('/api/analysis',analysis); 
 // Use routes
 app.use('/api/youtube', youtubeRoutes);
 app.use('/api/growth', growthRoutes);
