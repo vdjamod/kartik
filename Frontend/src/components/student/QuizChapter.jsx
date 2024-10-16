@@ -107,8 +107,6 @@
 
 // export default QuizChapter;
 
-
-
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
@@ -116,6 +114,7 @@ import axios from "axios";
 function QuizChapter() {
   const { stdid, subject } = useParams();
   const [text, setText] = useState("");
+  const [chapter, setChapter] = useState();
   const [chapterName, setChapterName] = useState(["A", "B"]);
   const [data, setData] = useState({});
   const [showBottomButton, setShowBottomButton] = useState(false); // State to show bottom button
@@ -125,10 +124,9 @@ function QuizChapter() {
     console.log(subject);
     const getData = async () => {
       try {
-        let response = await axios.post(
-          "/api/dashboard/get-subject-detail",
-          { subject: subject }
-        );
+        let response = await axios.post("/api/dashboard/get-subject-detail", {
+          subject: subject,
+        });
         console.log(response.data.data);
         let titles = response.data.data.map((val) => val.title);
 
@@ -149,6 +147,7 @@ function QuizChapter() {
         title,
       });
 
+      setChapter(title);
       setText(res.data);
       console.log(res.data);
 
@@ -178,13 +177,26 @@ function QuizChapter() {
     }
   };
 
-  const handleStart = async() => {
-    const res = await axios.post("/api/mcq", {
-      text: text
-    });
+  const handleStart = async () => {
+    // console.log("On button click: " + text);
 
-    console.log(res);
-  }
+    // try {
+    //   const res = await axios.post("/api/mcq", {
+    //     text
+    //   });
+
+    //   console.log(res.data);
+    //   console.log(res.data['mcqs']);
+    // } catch (error) {
+    //   console.log("Error: " + error);
+    // }
+
+    navigate(`/student/${stdid}/subject/${subject}/${chapter}/quiz`, {
+      state: {
+        text
+      },
+    });
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -221,6 +233,7 @@ function QuizChapter() {
                     href="#"
                     onClick={(e) => {
                       e.preventDefault(); // Prevent default anchor behavior
+                      // console.log(name);
                       handleQuiz(subject, name);
                     }}
                     className="text-blue-500 hover:underline"
@@ -243,7 +256,7 @@ function QuizChapter() {
             onClick={handleStart} // Replace with desired action
             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
           >
-            Start 
+            Start
           </button>
         </div>
       )}

@@ -8,6 +8,7 @@ export default defineConfig({
       // '/backend': 'https://sih-5.onrender.com',
       // '/pdf': 'https://sih-2024-5.onrender.com',
       '/api': 'http://localhost:3000',
+      '/dashboard': 'https://sihh-mauve.vercel.app',
     }
   },
   plugins: [react()],

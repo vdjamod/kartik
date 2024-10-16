@@ -1,155 +1,111 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-// import Quiz from "../components/Quiz";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 const QuizPage = () => {
-  const [MCQ, setMCQ] = useState([]);
-  const [userAnswers, setUserAnswers] = useState({}); // Store user's selected answers
-  const [score, setScore] = useState(null); // Store the user's score after submission
+  const location = useLocation();
+  const { text } = location.state || {}; // Get the passed data
   const { stdid, subject, chapter } = useParams();
   const navigate = useNavigate();
 
+  const [mcqs, setMcqs] = useState([]);
+  const [userAnswers, setUserAnswers] = useState({}); // Store user's selected answers
+  const [score, setScore] = useState(null); // Store the user's score after submission
+
+  const [student_level, setStudentLevel] = useState();
+
   useEffect(() => {
     const getData = async () => {
-      const response = await axios.post("http://localhost:3000/mcq/generate", {
-        title: chapter,
-        subject: subject,
-      });
-
-      setMCQ(response.data.mcq);
-      console.log(response.data.mcq);
+      try {
+        const res = await axios.post("/api/mcq", { text });
+        console.log(res.data);
+        setMcqs(res.data["mcqs"]);
+      } catch (error) {
+        console.log("Error: " + error);
+      }
     };
     getData();
   }, [chapter, subject]);
 
-  // Function to update user's selected answer
-  const handleOptionChange = (questionId, optionId) => {
-    setUserAnswers((prevAnswers) => ({
-      ...prevAnswers,
-      [questionId]: optionId,
+  const handleAnswerChange = (questionIndex, selectedOption) => {
+    setUserAnswers((prev) => ({
+      ...prev,
+      [questionIndex]: selectedOption,
     }));
   };
 
-  // Function to handle quiz submission and calculate the score
-  const handleSubmit = () => {
-    let totalCorrect = 0;
+  const handleSubmit = async () => {
+    let correctAnswers = 0;
 
-    MCQ.forEach((question, index) => {
-      // Compare user's answer with correct answer
-      if (userAnswers[index] === question.correct) {
-        totalCorrect += 1;
+    mcqs.forEach((mcq, index) => {
+      if (userAnswers[index] === mcq.correctAnswer) {
+        correctAnswers++;
       }
     });
 
-    // Set the score
-    setScore({
-      totalQuestions: MCQ.length,
-      correctAnswers: totalCorrect,
-      percentage: ((totalCorrect / MCQ.length) * 100).toFixed(2),
+    setScore(correctAnswers);
+
+    if(score >= 4) {
+      setStudentLevel("pro");
+    } else if(score == 3 || score == 2) {
+      setStudentLevel("medium");
+    } else {
+      setStudentLevel("beginner");
+    }
+
+
+    const res = await axios.post('/dashboard/post-growth', {
+      id: stdid,
+      chapter,
+      student_level,
+      subject
     });
-    console.log(score);
-  };
 
-  const handleCancelQuiz = () => {
-    navigate(`/student/${stdid}`);
+    console.log(res);
   };
 
   return (
-    <div className="container mx-auto p-8">
-      <button
-        onClick={handleCancelQuiz}
-        className="mt-8 ml-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-      >
-        Button
-      </button>
-      {/* <div className="bg-white p-6 rounded-lg shadow-lg">
-        <h1 className="text-3xl font-bold mb-4">Quiz: {chapter}</h1>
-        {MCQ ? (
-          <Quiz questions={MCQ} handleOptionChange={handleOptionChange} />
-        ) : (
-          <p>Loading</p>
-        )}
-        <button
-          onClick={handleSubmit}
-          className="mt-8 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          Submit Quiz
-        </button>
-        <button
-          onClick={handleCancelQuiz}
-          className="mt-8 ml-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          Cancel Quiz
-        </button> */}
-
-      {/* Display the marksheet after submission */}
-      {/* {score && (
-          <div className="mt-8">
-            <h2 className="text-xl font-semibold">Marksheet</h2>
-            <p>Total Questions: {score.totalQuestions}</p>
-            <p>Correct Answers: {score.correctAnswers}</p>
-            <p>Score Percentage: {score.percentage}%</p>
-          </div>
-        )}
-      </div> */}
-    </div>
-  );
-};
-
-const Option = ({ optionText, optionId, questionId, handleOptionChange }) => {
-  return (
-    <div>
-      <input
-        type="radio"
-        id={`q${questionId}o${optionId}`}
-        name={`q${questionId}`}
-        className="mr-2"
-        onChange={() => handleOptionChange(questionId, optionId)}
-      />
-      <label htmlFor={`q${questionId}o${optionId}`}>{optionText}</label>
-    </div>
-  );
-};
-
-const Question = ({
-  questionText,
-  options,
-  questionId,
-  handleOptionChange,
-}) => {
-  return (
-    <div className="mb-6">
-      <p className="text-lg font-semibold mb-2">
-        {questionId + 1}. {questionText}
-      </p>
-      <div className="space-y-2">
-        {options.map((option, i) => (
-          <Option
-            key={i}
-            optionText={option}
-            optionId={i}
-            questionId={questionId}
-            handleOptionChange={handleOptionChange}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
-
-const Quiz = ({ questions, handleOptionChange }) => {
-  return (
-    <div>
-      {questions.map((question, index) => (
-        <Question
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold text-center mb-6">Quiz</h1>
+      {mcqs.map((mcq, index) => (
+        <div
           key={index}
-          questionId={index}
-          questionText={question.question}
-          options={question.options}
-          handleOptionChange={handleOptionChange}
-        />
+          className="bg-white shadow-md rounded-lg p-6 mb-6 border border-gray-300"
+        >
+          <h3 className="text-xl font-semibold mb-4">
+            {index + 1}. {mcq.question}
+          </h3>
+          <ul className="space-y-2">
+            {mcq.options.map((option, optionIndex) => (
+              <li key={optionIndex} className="flex items-center">
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    name={`question-${index}`}
+                    value={option}
+                    onChange={() => handleAnswerChange(index, option)} // Update answers on change
+                    className="form-radio h-5 w-5 text-blue-600"
+                  />
+                  <span className="text-gray-700">{option}</span>
+                </label>
+              </li>
+            ))}
+          </ul>
+        </div>
       ))}
+
+      <button
+        onClick={handleSubmit}
+        className="mt-4 w-full bg-blue-600 text-white font-semibold py-2 rounded-lg hover:bg-blue-700"
+      >
+        Submit Quiz
+      </button>
+
+      {score !== null && (
+        <div className="mt-4 p-4 bg-green-100 text-green-800 rounded-lg">
+          <h2 className="text-lg font-bold">Your Score: {score}/{mcqs.length}</h2>
+        </div>
+      )}
     </div>
   );
 };

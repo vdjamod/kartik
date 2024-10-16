@@ -66,12 +66,12 @@ function App() {
           <Route path="/student/:stdid/chat" element={<StudentChatbot />} />
           <Route path="/student/:stdid" element={<StudentHome />} />
           <Route
-            path="/student/:stdid/subject/:subject/:chapter/quiz"
-            element={<QuizPage />}
-          />
-          <Route
             path="/student/:stdid/subject/:subject"
             element={<QuizChapter />}
+          />
+          <Route
+            path="/student/:stdid/subject/:subject/:chapter/quiz"
+            element={<QuizPage />}
           />
           <Route
             path="/student/:stdid/learning"
