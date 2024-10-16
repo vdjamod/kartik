@@ -24,7 +24,7 @@ const ClassroomList = ({ classrooms, onTakeQuiz }) => {
               <h3 className="text-xl font-bold text-gray-900">
                 {classroom.name}
               </h3>
-              <p className="mt-2 text-gray-600 mb-7">{classroom.description}</p>
+              <p className="mt-2 text-gray-600 mb-7">interestScore: {classroom.interestScore}</p>
               <a
                 // onClick={() => handleTakeQuiz(classroom.name)}
                 href={`/student/${stdid}/subject/${classroom.name}/`}
