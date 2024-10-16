@@ -70,7 +70,7 @@ function App() {
             element={<QuizChapter />}
           />
           <Route
-            path="/student/:stdid/subject/:subject/:chapter/quiz"
+            path="/student/:stdid/:subject/:chapter/quiz"
             element={<QuizPage />}
           />
           <Route

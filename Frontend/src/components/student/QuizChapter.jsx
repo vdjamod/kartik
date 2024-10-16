@@ -191,7 +191,7 @@ function QuizChapter() {
     //   console.log("Error: " + error);
     // }
 
-    navigate(`/student/${stdid}/subject/${subject}/${chapter}/quiz`, {
+    navigate(`/student/${stdid}/${subject}/${chapter}/quiz`, {
       state: {
         text
       },
