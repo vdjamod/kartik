@@ -39,7 +39,6 @@
 
 // export default TeacherHome;
 
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 // import StudentNavbar from "./StudentNavbar";
@@ -49,7 +48,7 @@ import LearningPath from "../LearningPath";
 import ClassroomList from "../teacher/ClassroomList";
 import { useNavigate, useParams } from "react-router-dom";
 
-const StudentHomePage = () => {
+const TeacherHomePage = () => {
   const [page, setPage] = useState("home");
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
@@ -150,6 +149,10 @@ const StudentHomePage = () => {
     navigate(`/teacher/${tchrid}`);
   };
 
+  const handleUpload = () => {
+    navigate(`/teacher/${tchrid}/upload`)
+  }
+
   return (
     <div>
       <StudentNavbar setPage={setPage} />
@@ -162,6 +165,15 @@ const StudentHomePage = () => {
               classrooms={classrooms}
               onTakeQuiz={handleTakeQuiz}
             />
+
+            <div className="flex justify-end mt-4">
+              <button
+                className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200"
+                onClick={handleUpload}
+              >
+                Upload PDF
+              </button>
+            </div>
           </>
         )}
         {/* Additional page content based on 'page' state */}
@@ -185,4 +197,4 @@ const StudentHomePage = () => {
   );
 };
 
-export default StudentHomePage;
+export default TeacherHomePage;
