@@ -9,10 +9,12 @@ const InputComponent = () => {
   const [generatedLink, setGeneratedLink] = useState();
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const {stdid} = useParams();
+  const { stdid } = useParams();
 
   useEffect(() => {
-    const lastGeneratedLinks = JSON.parse(localStorage.getItem("generatedLinks"));
+    const lastGeneratedLinks = JSON.parse(
+      localStorage.getItem("generatedLinks")
+    );
     const hasVisitedVideo = sessionStorage.getItem("visitedVideo");
 
     if (lastGeneratedLinks && hasVisitedVideo) {
@@ -31,9 +33,16 @@ const InputComponent = () => {
         title: inputData,
       });
 
-      const urls = response.data.data.map((el) => el.url);
+      const urls = response.data.data.map(
+        (el) => `https://www.youtube.com/watch?v=${el.id}`
+      );
 
-      setResponseData(urls);
+      const formattedData = response.data.data.map((el) => ({
+        url: `https://www.youtube.com/watch?v=${el.id}`,
+        thumbnail: el.thumbnail.thumbnails[0].url,
+      }));
+
+      setResponseData(formattedData);
       setError(null);
 
       localStorage.setItem("generatedLinks", JSON.stringify(urls));
@@ -58,7 +67,9 @@ const InputComponent = () => {
       const genLink = res.data.generatedLink;
       setGeneratedLink(genLink);
 
-      navigate(`/student/${stdid}/youtube/video`, { state: { videoUrl: genLink } });
+      navigate(`/student/${stdid}/youtube/video`, {
+        state: { videoUrl: genLink },
+      });
     } catch (err) {
       console.error("Error occurred after link was clicked: ", err);
     }
@@ -71,11 +82,11 @@ const InputComponent = () => {
         value={inputData}
         onChange={handleChange}
         placeholder="Enter title"
-        className="w-full mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-1/2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <button
         onClick={handleSubmit}
-        className="px-6 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="ml-1 px-6 py-2 bg-blue-500 text-white font-semibold rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
         Submit
       </button>
@@ -83,14 +94,19 @@ const InputComponent = () => {
       {responseData.length > 0 && (
         <div className="mt-4">
           <h3 className="text-lg font-semibold">Generated Links:</h3>
-          <ul className="list-disc pl-5">
+          <ul className="list-disc pl-5 space-y-4">
             {responseData.map((url, index) => (
-              <li key={index}>
+              <li key={index} className="flex items-center space-x-4">
+                <img
+                  src={url.thumbnail}
+                  alt="Thumbnail"
+                  className="w-16 h-16 object-cover rounded-md sm:w-20 sm:h-20 md:w-24 md:h-24"
+                />
                 <button
                   onClick={() => handleLinkClick(url)}
-                  className="text-blue-500 hover:underline"
+                  className="text-blue-500 hover:underline truncate sm:max-w-xs md:max-w-md"
                 >
-                  {url}
+                  {url.url}
                 </button>
               </li>
             ))}
@@ -123,4 +139,3 @@ const InputComponent = () => {
 };
 
 export default InputComponent;
-

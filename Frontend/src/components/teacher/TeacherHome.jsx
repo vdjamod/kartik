@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-// import StudentNavbar from "./StudentNavbar";
-import StudentNavbar from "../student/StudentNavbar";
 import TeacherNavbar from "./TeacherNavbar";
 import SearchBar from "../SearchBar";
 import LearningPath from "../LearningPath";

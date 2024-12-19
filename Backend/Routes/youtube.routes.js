@@ -12,10 +12,14 @@ router.post('/video', async (req, res) => {
       title,
     });
 
+    console.log("Response of API: " + response);
+
     const videoLinks = response.data.data.map((el) => ({
       id: el.id,
       url: `https://www.youtube.com/watch?v=${el.id}`,
     }));
+
+    console.log("Video Links: " + videoLinks);
 
     res.status(200).json({ data: videoLinks });
   } catch (error) {

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 
 const VideoPlayer = () => {
@@ -8,6 +8,7 @@ const VideoPlayer = () => {
   const playerRef = useRef(null);
   const [generatedLink, setGeneratedLink] = useState("");
   const navigate = useNavigate();
+  const {stdid} = useParams();
 
   useEffect(() => {
     if (!videoUrl) return;
@@ -93,7 +94,7 @@ const VideoPlayer = () => {
 
   const handleBackClick = () => {
     sessionStorage.setItem("visitedVideo", "true");
-    navigate("/");
+    navigate(`/student/${stdid}/youtube`);
   };
 
   if (!videoUrl) {
