@@ -97,6 +97,10 @@ const StudentHomePage = () => {
     navigate(`/student/${stdid}`);
   };
 
+  const handleUpload = () => {
+    navigate(`/student/${stdid}/youtube`)
+  }
+
   return (
     <div>
       <StudentNavbar setPage={setPage} />
@@ -109,25 +113,18 @@ const StudentHomePage = () => {
               classrooms={classrooms}
               onTakeQuiz={handleTakeQuiz}
             />
+            <div className="flex justify-end mt-4">
+              <button
+                className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200"
+                onClick={handleUpload}
+              >
+                Watch Video
+              </button>
+            </div>
           </>
         )}
         {/* Additional page content based on 'page' state */}
       </div>
-
-      {/* <div>
-        <button
-          onClick={handleChatbot}
-          className="px-6 ml-12 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700 transition duration-150 ease-in-out"
-        >
-          Chatbot
-        </button>
-      </div> */}
-      {/* <button
-        type="submit"
-        className="px-6 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700 transition duration-150 ease-in-out"
-      >
-        Search
-      </button> */}
     </div>
   );
 };

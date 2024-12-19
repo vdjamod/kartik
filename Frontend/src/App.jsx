@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./App.css";
 
-import Home from "./components/Home";
+import Home from "./utils/Home";
 import SignupForm from "./components/SignupForm";
 import UploadPdf from "./components/UploadPdf";
 

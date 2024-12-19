@@ -1,48 +1,8 @@
-// import React, { useState } from "react";
-// import { useParams } from "react-router-dom";
-// import ClassroomList from "./ClassroomList";
-// import Navbar from "./TeacherNavbar";
-
-// const TeacherHome = ({ setPage }) => {
-//   let { id } = useParams();
-//   const [classrooms, setClassrooms] = useState([
-//     {
-//       name: "DSA",
-//       description: "Data Structure Algorithams",
-//       subject: "Mathematics",
-//       startDate: "2024-09-10",
-//       endDate: "2024-12-10",
-//       classCode: "CL-12345",
-//       classroomImage:
-//         "https://via.placeholder.com/400x200.png?text=Mathematics",
-//     },
-//     {
-//       name: "DSAA",
-//       description: "Data Structure And Algorithams",
-//       subject: "Physics",
-//       startDate: "2024-09-15",
-//       endDate: "2024-12-15",
-//       classCode: "CL-67890",
-//       classroomImage: "https://via.placeholder.com/400x200.png?text=Physics",
-//     },
-//   ]);
-
-//   return (
-//     <div>
-//       <Navbar setPage={setPage} />
-//       <div className="p-8">
-//         <ClassroomList classrooms={classrooms} />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default TeacherHome;
-
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 // import StudentNavbar from "./StudentNavbar";
 import StudentNavbar from "../student/StudentNavbar";
+import TeacherNavbar from "./TeacherNavbar";
 import SearchBar from "../SearchBar";
 import LearningPath from "../LearningPath";
 import ClassroomList from "../teacher/ClassroomList";
@@ -150,13 +110,13 @@ const TeacherHomePage = () => {
   };
 
   const handleUpload = () => {
-    navigate(`/teacher/${tchrid}/upload`)
-  }
+    navigate(`/teacher/${tchrid}/upload`);
+  };
 
   return (
     <div>
-      <StudentNavbar setPage={setPage} />
-      <div className="container mx-auto p-8">
+      <TeacherNavbar setPage={setPage} />
+      <div className="container mx-auto p-8 bg-gray-50">
         {page === "home" && (
           <>
             <SearchBar onSearch={handleSearch} />
@@ -168,7 +128,7 @@ const TeacherHomePage = () => {
 
             <div className="flex justify-end mt-4">
               <button
-                className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200"
+                className="bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition duration-200"
                 onClick={handleUpload}
               >
                 Upload PDF
@@ -178,21 +138,6 @@ const TeacherHomePage = () => {
         )}
         {/* Additional page content based on 'page' state */}
       </div>
-
-      {/* <div>
-        <button
-          onClick={handleChatbot}
-          className="px-6 ml-12 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700 transition duration-150 ease-in-out"
-        >
-          Chatbot
-        </button>
-      </div> */}
-      {/* <button
-        type="submit"
-        className="px-6 py-2 bg-blue-500 text-white font-semibold rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 active:bg-blue-700 transition duration-150 ease-in-out"
-      >
-        Search
-      </button> */}
     </div>
   );
 };
