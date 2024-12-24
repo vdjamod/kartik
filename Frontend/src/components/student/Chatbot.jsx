@@ -1,57 +1,58 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from "react";
+import ChatMessage from "../chatbot/ChatMessage";
+import ChatInput from "../chatbot/ChatInput";
+import axios from "axios";
 
-const Chatbot = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [results, setResults] = useState([]);
+const ChatWindow = () => {
+  const [messages, setMessages] = useState([]);
+  const messagesEndRef = useRef(null);
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    // Replace with your API endpoint
-    const API_URL = `https://api.example.com/search?q=${searchQuery}`;
+  //Filter the messages....
+  const filterMessage = (text) => {
+    return text.replace(/\*/g, ''); // Removes all instances of '**'
+  };
+
+  const sendMessage = async (text) => {
+    // console.log(text);
+    const userMessage = { message: text, isUser: true };
+    setMessages((prev) => [...prev, userMessage]);
 
     try {
-      const response = await fetch(API_URL);
-      const data = await response.json();
-      setResults(data.results); // Adjust based on the API response structure
+      const res = await axios.post("/api/chat/get-solution", {
+        text: text,
+      });
+      
+      const botMessage = { message: filterMessage(res.data), isUser: false };
+      setMessages((prev) => [...prev, botMessage]);
     } catch (error) {
-      console.error('Error fetching search results:', error);
+      console.log(error);
+      const errorMessage = { message: "Something went wrong!", isUser: false };
+      setMessages((prev) => [...prev, errorMessage]);
     }
   };
 
-  return (
-    <div className="flex flex-col items-center p-4">
-      <form className="flex w-full max-w-md" onSubmit={handleSearch}>
-        <input
-          type="text"
-          className="flex-grow p-2 border border-gray-300 rounded-l-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <button
-          type="submit"
-          className="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          Search
-        </button>
-      </form>
+  useEffect(() => {
+    // Scroll to the bottom whenever messages change
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
-      {/* Display search results */}
-      <div className="mt-4 w-full max-w-md">
-        {results.length > 0 ? (
-          <ul className="space-y-2">
-            {results.map((result, index) => (
-              <li key={index} className="p-2 border border-gray-200 rounded-md">
-                {result.title || result.name} {/* Adjust based on your data */}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-500">No results found</p>
-        )}
+  return (
+    <div className="flex flex-col h-screen">
+      {/* Scrollable messages area */}
+      <div className="flex-1 overflow-y-auto p-3 bg-gray-100">
+        {messages.map((msg, idx) => (
+          <ChatMessage key={idx} message={msg.message} isUser={msg.isUser} />
+        ))}
+        {/* Invisible element to ensure scrolling */}
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Fixed input area */}
+      <div className="sticky bottom-0 bg-white shadow-md">
+        <ChatInput onSend={sendMessage} />
       </div>
     </div>
   );
 };
 
-export default Chatbot;
+export default ChatWindow;

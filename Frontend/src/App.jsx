@@ -25,7 +25,6 @@ import LearningProgress from "./components/LearningProgress";
 import QuizPage from "./components/QuizPage";
 import Dashboard from "./components/student/Dashboard";
 import LoginPage from "./components/LoginPage";
-import Chatbot from "./components/student/Chatbot";
 import Feedback from "./utils/Feedback";
 import Aboutus from "./utils/Aboutus";
 import QuizChapter from "./components/student/QuizChapter";
@@ -33,7 +32,7 @@ import InputComponent from "./components/youtube/InputComponent";
 import VideoPlayer from "./components/youtube/VideoPlayer";
 
 //Chatbot
-import ChatWindow from "./components/chatbot/ChatWindow";
+import Chatbot from "./components/student/Chatbot";
 
 function App() {
   return (
@@ -83,7 +82,6 @@ function App() {
           <Route path="/student/:stdid/dashboard" element={<Dashboard />} />
           {/* <Route path="/student/:stdid/quiz" element={<QuizPage />} /> */}
           <Route path="/student/:stdid/chatbot" element={<Chatbot />} />
-          <Route path="/student/:stdid/chatwindow" element={<ChatWindow />} />
 
           {/* utils */}
           <Route path="/feedback" element={<Feedback />} />
