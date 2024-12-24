@@ -32,6 +32,9 @@ import QuizChapter from "./components/student/QuizChapter";
 import InputComponent from "./components/youtube/InputComponent";
 import VideoPlayer from "./components/youtube/VideoPlayer";
 
+//Chatbot
+import ChatWindow from "./components/chatbot/ChatWindow";
+
 function App() {
   return (
     <>
@@ -80,6 +83,7 @@ function App() {
           <Route path="/student/:stdid/dashboard" element={<Dashboard />} />
           {/* <Route path="/student/:stdid/quiz" element={<QuizPage />} /> */}
           <Route path="/student/:stdid/chatbot" element={<Chatbot />} />
+          <Route path="/student/:stdid/chatwindow" element={<ChatWindow />} />
 
           {/* utils */}
           <Route path="/feedback" element={<Feedback />} />
