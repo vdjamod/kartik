@@ -39,7 +39,7 @@ app.use('/api/pdf',pdf);
 app.use('/api/backend',appp);
 app.use('/api/mcq',mcq); 
 app.use('/api/chat',chat);
-app.use('/api/dashboard',dash); 
+app.use('/api/dashboard',dash);
 app.use('/api/bibtex',bibtex); 
 app.use('/api/analysis',analysis); 
 // Use routes

@@ -31,6 +31,12 @@ const TeacherPdfCreate = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log("title: " + pdfTitle);
+    console.log("heading: " + heading);
+    console.log("content: " + content.map((ctn) => ctn.title));
+    console.log("content: " + content.map((ctn) => ctn.description));
+    console.log("content: " + content.map((ctn) => ctn.link));
+
     // Construct the body to match the required structure
     const requestBody = {
       pdf_title: heading, // Use the heading as pdf_title if that fits your need
@@ -52,6 +58,7 @@ const TeacherPdfCreate = () => {
       console.log(response);
 
       if (response.status === 200) {
+        
         // Assuming the response contains a file URL directly
         const { file_url } = response.data;
         // console.log(file_url)

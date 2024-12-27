@@ -28,7 +28,6 @@ const TeacherUploadPdf = () => {
     console.log(title, file);
 
     const result = await axios.post(
-      // "/api/pdf//upload-files",
       "/api/pdf/upload-files",
       formData,
       {
@@ -42,10 +41,6 @@ const TeacherUploadPdf = () => {
       alert("Uploaded Successfully!!!");
       // getPdf();
     }
-    // if (result.data.status === "ok") {
-    //   alert("Uploaded Successfully!!!");
-    //   getPdf();
-    // }
   };
 
   const handleBack = () => {

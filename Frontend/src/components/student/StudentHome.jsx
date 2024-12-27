@@ -40,7 +40,7 @@ const StudentHomePage = () => {
         const subjects = [
           ...new Set(res1.data.data.map((item) => item.subject)),
         ];
-        setClassrooms(subjects);
+        // setClassrooms(subjects);
 
         const res2 = await axios.post("/api/analysis/all-subject", {
           id: stdid,
@@ -112,6 +112,7 @@ const StudentHomePage = () => {
             <ClassroomList
               classrooms={classrooms}
               onTakeQuiz={handleTakeQuiz}
+              isStudent={true}
             />
             <div className="flex justify-end mt-4">
               <button

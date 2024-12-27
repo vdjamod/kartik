@@ -5,7 +5,6 @@ const fs = require('fs');
 const path = require('path');
 const PDF = require('./Models/pdf');
 
-
 // Function to create a PDF
 function createPDF(filename, content, heading) {
     return new Promise((resolve, reject) => {
@@ -98,7 +97,9 @@ router.post('/create-pdf',async (req, res) => {
         const filePath = await createPDF(filename, content, heading);
         const data = new PDF({
             pdf: filename,
-            title : pdf_title
+            title : pdf_title,
+            faculty_id: faculty_id,
+            subject: subject
         });
 
         try {

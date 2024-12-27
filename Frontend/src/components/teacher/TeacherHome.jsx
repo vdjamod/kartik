@@ -40,15 +40,16 @@ const TeacherHomePage = () => {
         const subjects = [
           ...new Set(res1.data.data.map((item) => item.subject)),
         ];
-        setClassrooms(subjects);
+
+        // setClassrooms(subjects);
 
         const res2 = await axios.post("/api/analysis/all-subject", {
           id: tchrid,
         });
 
-        console.log(res2);
+        // console.log(res2);
         // console.log(res2['data']);
-        console.log(res2.data.data);
+        // console.log(res2.data.data);
 
         // Create a mapping of subjects to their interest scores
         const interestScoreMap = res2.data.data.reduce((acc, item) => {

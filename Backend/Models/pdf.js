@@ -18,11 +18,11 @@ const pdfSchema = new mongoose.Schema({
     },
     title_no : {
         type : String,
-        required : true
+        // required : true
     },
     video_link : {
         type : String,
-        required : true
+        // required : true
     }
 });
 
