@@ -13,7 +13,6 @@ const TeacherHomePage = () => {
   const { tchrid } = useParams();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [classrooms, setClassrooms] = useState([]);
-  // console.log(stdid);
 
   const handleChatbot = () => {
     navigate(`/student/${tchrid}/chatbot`);
@@ -125,14 +124,14 @@ const TeacherHomePage = () => {
               onTakeQuiz={handleTakeQuiz}
             />
 
-            <div className="flex justify-end mt-4">
+            {/* <div className="flex justify-end mt-4">
               <button
                 className="bg-teal-600 text-white px-6 py-3 rounded-lg hover:bg-teal-700 transition duration-200"
                 onClick={handleUpload}
               >
                 Upload PDF
               </button>
-            </div>
+            </div> */}
           </>
         )}
         {/* Additional page content based on 'page' state */}
